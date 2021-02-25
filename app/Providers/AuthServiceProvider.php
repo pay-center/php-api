@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Auth\JwtGuard;
+use App\Services\Auth\JwtToken;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -25,6 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::extend('jwt', function ($app, $name, array $config) {
+            return new JwtGuard(
+                Auth::createUserProvider($config['provider']),
+                new JwtToken(),
+                $app['request']
+            );
+        });
     }
 }

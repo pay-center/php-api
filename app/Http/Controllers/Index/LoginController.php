@@ -17,12 +17,15 @@ class LoginController
      */
     public function login(Request $request): JsonResponse
     {
-        $credentials = $request->only('account', 'password');
+        $credentials = [
+            'account'  => $request->input('username'),
+            'password' => $request->input('password'),
+        ];
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::validate($credentials)) {
             // 认证通过．．．
             return Msg::success([
-                'token'=>'123456'
+                'token' => Auth::user()->getRememberToken(),
             ]);
         }
 

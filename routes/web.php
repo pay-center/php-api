@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Index\LoginController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::post('auth/login', [LoginController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    // admin user
+    Route::prefix('user')->group(function () {
+        Route::get('info', [UserController::class, 'info']);
+        Route::get('logout', [UserController::class, 'logout']);
+    });
 });
+
