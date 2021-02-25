@@ -38,7 +38,7 @@ class CreatePayOrdersTable extends Migration
                 'CLOSED',  // 未支付就关闭
             ])->default('NOTPAY')->comment('交易状态枚举');
             $table->string('pay_type')->comment('pay_apps@pay_type');
-            $table->string('trade_no')->comment('第三方的交易号，第三方颁发');
+            $table->string('trade_no',64)->comment('第三方的交易号，第三方颁发');
 
             $table->string('notify_url')->comment('本订单回调地址');
             $table->string('notify_attach')->comment('服务自定义业务参数,支付成功回调时带上');
