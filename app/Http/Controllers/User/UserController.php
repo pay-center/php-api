@@ -26,7 +26,7 @@ class UserController
         return Msg::success([
             'id'           => $user->id,
             'name'         => $user->nickname,
-            'avatar'       => '',
+            'avatar'       => url('/users/汉堡.png'),
             'introduction' => 'admin user remark',
             'roles'        => ['admin'],
         ]);

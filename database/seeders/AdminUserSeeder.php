@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
  */
 class AdminUserSeeder extends Seeder
 {
+    protected $avatar = [
+        '汉堡',
+        '樱桃',
+        '牛肉面',
+        '甜甜圈',
+    ];
+
     /**
      * Run the database seeds.
      *
@@ -19,16 +26,18 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        AdminUser::insert([
+        AdminUser::create([
             'account'  => 'admin',
             'nickname' => '管理员',
+            'avatar'   => '/users/'.$this->avatar[0].'.png',
             'email'    => 'admin@qq.my',
             'password' => Hash::make('123456'),
         ]);
 
-        AdminUser::insert([
+        AdminUser::create([
             'account'  => 'test',
             'nickname' => '测试',
+            'avatar'   => '/users/'.$this->avatar[rand(1, count($this->avatar))].'.png',
             'email'    => 'test@qq.my',
             'password' => Hash::make('123456'),
         ]);
