@@ -18,10 +18,22 @@ use Illuminate\Support\Facades\Route;
 Route::post('auth/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    // admin user
+    // 管理用户模块
     Route::prefix('user')->group(function () {
         Route::get('info', [UserController::class, 'info']);
         Route::get('logout', [UserController::class, 'logout']);
+    });
+
+    // 权限模块
+    Route::prefix('admin')->group(function () {
+        Route::apiResource('user', \App\Http\Controllers\Admin\UserController::class);
+        Route::apiResource('role', \App\Http\Controllers\Admin\RoleController::class);
+        Route::apiResource('power', \App\Http\Controllers\Admin\PowerController::class);
+    });
+
+    // 订单模块
+    Route::prefix('pay')->group(function () {
+        Route::apiResource('order', \App\Http\Controllers\Pay\OrderController::class);
     });
 });
 
